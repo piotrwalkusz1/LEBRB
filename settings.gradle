@@ -1,0 +1,5 @@
+rootProject.name = 'lebrb'
+include 'spec'
+include 'webserver'
+include 'lanlearn-service'
+include 'lanlearn'

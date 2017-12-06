@@ -1,0 +1,99 @@
+buildscript {
+    ext {
+        kotlinVersion = '1.2.0'
+        springBootVersion = '1.5.7.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+        classpath 'com.thoughtworks.gauge.gradle:gauge-gradle-plugin:+'
+    }
+}
+
+group = 'com.piotrwalkusz.lebrb'
+version = '0.0.1-SNAPSHOT'
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+project(':webserver') {
+    apply plugin: 'kotlin'
+    apply plugin: 'kotlin-spring'
+    apply plugin: 'org.springframework.boot'
+
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter-security')
+        compile('org.springframework.boot:spring-boot-starter-web')
+        compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
+        compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+        runtime('org.springframework.boot:spring-boot-devtools')
+        testCompile('org.springframework.boot:spring-boot-starter-test')
+        testCompile('org.springframework.security:spring-security-test')
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+}
+
+project(':lanlearn-service') {
+    apply plugin: 'kotlin'
+    apply plugin: 'kotlin-spring'
+    apply plugin: 'org.springframework.boot'
+
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter-web')
+        compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
+        compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+        testCompile('org.springframework.boot:spring-boot-starter-test')
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+}
+
+project(':lanlearn') {
+    apply plugin: 'kotlin'
+
+    dependencies {
+        compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
+        compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+        compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.7'
+        compile group: 'io.projectreactor', name: 'reactor-core', version: '3.0.7.RELEASE'
+        compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version: '3.8.0'
+        compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version: '3.8.0', classifier: 'models'
+        compile group: 'org.languagetool', name: 'language-de', version: '3.9'
+        compile group: 'org.languagetool', name: 'language-en', version: '3.9'
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+}
+
+project(':spec') {
+    apply plugin: 'java'
+    apply plugin: 'gauge'
+
+    dependencies {
+        compile project(':webserver')
+        compile('com.thoughtworks.gauge:gauge-java:+')
+    }
+}
