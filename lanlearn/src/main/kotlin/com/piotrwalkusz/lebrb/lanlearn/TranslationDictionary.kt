@@ -44,7 +44,7 @@ class TranslationDictionary(val sourceLanguage: Language,
                 throw IllegalArgumentException("Language ${nonExistingLanguage.first} in Translation Dictionary file " +
                         "does not exist")
 
-            val translations = reader.readLines().drop(1).map {
+            val translations = lines.drop(1).map {
                 val forms = it.split(';')
                 if (forms.size != 3) {
                     throw IllegalArgumentException("Lines in Translation Dictionary has to be in format " +

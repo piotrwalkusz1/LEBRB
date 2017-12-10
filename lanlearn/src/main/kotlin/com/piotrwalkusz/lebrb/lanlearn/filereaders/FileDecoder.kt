@@ -4,7 +4,7 @@ import reactor.core.publisher.Flux
 import java.io.InputStream
 import java.io.Reader
 
-interface FileReader {
+interface FileDecoder {
 
     fun read(source: InputStream): Flux<Reader>
 }

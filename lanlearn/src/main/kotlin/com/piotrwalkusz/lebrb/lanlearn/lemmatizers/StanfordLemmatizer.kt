@@ -2,8 +2,8 @@ package com.piotrwalkusz.lebrb.lanlearn.lemmatizers
 
 import com.piotrwalkusz.lebrb.lanlearn.Language
 import edu.stanford.nlp.ling.CoreAnnotations
-import edu.stanford.nlp.pipeline.StanfordCoreNLP
 import edu.stanford.nlp.pipeline.Annotation
+import edu.stanford.nlp.pipeline.StanfordCoreNLP
 import edu.stanford.nlp.util.PropertiesUtils
 import java.io.Reader
 

@@ -21,16 +21,16 @@ class LanguageToolLemmatizer(language: Language) : Lemmatizer {
 
         for (word in words) {
 
-            val lowerCaseWord = word.toLowerCase()
-            if (dictionary.contains(lowerCaseWord)) {
-                wordsFrequency.merge(lowerCaseWord, 1, Int::plus)
-                continue
-            }
-
             val lemma = lemmatizeWord(word).find { dictionary.contains(it) }
 
             if (lemma != null) {
                 wordsFrequency.merge(lemma, 1, Int::plus)
+                continue
+            }
+
+            val lowerCaseWord = word.toLowerCase()
+            if (dictionary.contains(lowerCaseWord)) {
+                wordsFrequency.merge(lowerCaseWord, 1, Int::plus)
             }
         }
 
