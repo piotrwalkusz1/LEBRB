@@ -47,13 +47,11 @@ class LanLearnProcessor {
         val fileReader = fileReaders[mimeType] ?: throw IllegalArgumentException("Mime type $mimeType is not supported")
         val partsOfFile: Flux<Reader> = fileReader.read(source)
 
-        val wordsFrequency: Map<String, Int> = partsOfFile
+        return partsOfFile
                 .flatMap { Mono.defer { Mono.just(lemmatizer.lemmatize(it, dictionary) ) }
                         .subscribeOn(Schedulers.parallel()) }
                 .reduce { x, y -> mergeWordsFrequency(x, y) }
                 .block()
-
-        return wordsFrequency
     }
 
     private fun mergeWordsFrequency(x: Map<String, Int>, y: Map<String, Int>): Map<String, Int> {
